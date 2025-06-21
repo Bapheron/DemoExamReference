@@ -1,0 +1,23 @@
+﻿<Window x:Class="DemoReference.Views.UserMainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoReference.Views"
+        mc:Ignorable="d"
+        Title="UserMainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <DataGrid ItemsSource="{Binding UserCollection}" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                <DataGridTextColumn Header="Login" Binding="{Binding Login}"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding Role}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

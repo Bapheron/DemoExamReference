@@ -1,0 +1,21 @@
+﻿<Window x:Class="DemoReference.Views.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoReference.Views"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Width="200">
+            <Label>Login:</Label>
+            <TextBox x:Name="tbLogin"/>
+            <Label>Password:</Label>
+            <TextBox x:Name="tbPass"/>
+
+            <Button Content="Enter" Margin="0, 15" Click="Enter_Click"/>
+            <Button Content="Registration" Click="ToRegistrationPage_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
