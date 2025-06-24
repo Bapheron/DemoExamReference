@@ -16,16 +16,21 @@ namespace DemoReference
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+
+           
+
             var services = new ServiceCollection();
 
             services.AddDbContext<TestDBConext>();
 
             services.AddSingleton<AuthService>();
+            services.AddSingleton<TrackerService>();
 
             services.AddTransient<LoginWindow>();
 
             services.AddTransient<UserMainViewModel>();
             services.AddTransient<AdminMainViewModel>();
+            services.AddTransient<EquipmentListViewModel>();
 
 
             var serviceProvider = services.BuildServiceProvider();

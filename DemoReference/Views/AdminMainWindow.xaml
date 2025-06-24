@@ -5,26 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoReference.Views"
         mc:Ignorable="d"
-        Title="AdminMainWindow" Height="450" Width="350">
+        Title="AdminMainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <DataGrid x:Name="myDataGrid" ItemsSource="{Binding BuilderJobDutiesCollection}" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Width="30"/>
-                <DataGridTextColumn Header="Builder" Binding="{Binding Builder.SecondName}" Width="100"/>
-                <DataGridTextColumn Header="Duties" Binding="{Binding JobDuties.Name}" Width="110"/>
-                <DataGridTextColumn Header="Administrator" Binding="{Binding User.Login}" Width="100"/>
-            </DataGrid.Columns>
-        </DataGrid>
+        <StackPanel  Orientation="Horizontal">
+            <DataGrid x:Name="myDataGrid" Width="398" Margin="0,0,4,0" ItemsSource="{Binding EquipmentCollection}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="Inventory Number" Binding="{Binding InventoryNumber}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Type" Binding="{Binding Type}"/>
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}"/>
+                    <DataGridTextColumn Header="Publication Date" Binding="{Binding PublicationDate}"/>
+                    <DataGridTextColumn Header="State" Binding="{Binding State}"/>
+                    <DataGridTextColumn Header="Reader" Binding="{Binding User.Surname}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
-            <Button Content="Add Builder" Width="100" Click="ToAddPage_Click"/>
+            <DataGrid x:Name="myDataGrid2" Width="398" ItemsSource="{Binding UserCollection}" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Id" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="User Login" Binding="{Binding Login}"/>
+                    <DataGridTextColumn Header="Registration Date" Binding="{Binding RegistrationDate}"/>
+                    <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Phone" Binding="{Binding Phone}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+            
+            <Button Content="Add Equipment" Width="100" Click="ToAddPage_Click"/>
             <Button Content="Change" Width="100" Margin="15, 0" Click="ToChangePage_Click"/>
             <Button Content="Delete" Width="100" Click="Delete_Click"/>
+
+            <Button Content="Asign a User" Width="100" Margin="15, 0" Click="Asign_Click"/>
+            <Button Content="Unasign a User" Width="100" Click="Unasign_Click"/>
+
         </StackPanel>
     </Grid>
 </Window>

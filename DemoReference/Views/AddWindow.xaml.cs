@@ -33,28 +33,33 @@ namespace DemoReference.Views
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            string fName = tbFName.Text;
-            string sName = tbSName.Text;
-            string patro = tbPatronymic.Text;
+            string num = tbNumber.Text;
+            string name = tbName.Text;
+            string type = tbType.Text;
+            string descrip = tbDescription.Text;
 
-            if (string.IsNullOrWhiteSpace(fName) || string.IsNullOrWhiteSpace(sName) || string.IsNullOrWhiteSpace(patro))
+            if (string.IsNullOrWhiteSpace(num) || string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(descrip))
             {
                 MessageBox.Show("Заполните все поля");
                 return;
             }
             else
             {
-                var builder = new Builder();
+                var equip = new Equipment();
 
-                builder.FirstName = fName;
-                builder.SecondName = sName;
-                builder.Patronymic = patro;
+                equip.InventoryNumber = num;
+                equip.Name = name;
+                equip.Type = type;
+                equip.Description = descrip;
+                equip.PublicationDate = DateOnly.FromDateTime(DateTime.Now);
+                equip.State = Enums.EquipmentState.inStock;
+                equip.UserId = null;
 
-                _context.Builders.Add(builder);
+                _context.Equipments.Add(equip);
                 _context.SaveChanges();
             }
 
-            MessageBox.Show("Строитель добавлен");
+            MessageBox.Show("Экипировка добавлена");
             var mainWindow = new AdminMainWindow(_serviceProvider);
             mainWindow.Show();
             this.Close();

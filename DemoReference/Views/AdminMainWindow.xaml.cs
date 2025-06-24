@@ -36,6 +36,51 @@ namespace DemoReference.Views
             _context = _serviceProvider.GetRequiredService<TestDBConext>();
         }
 
+        private void Asign_Click(object sender, RoutedEventArgs e)
+        {
+            if (myDataGrid.SelectedItem != null && myDataGrid2.SelectedItem != null)
+            {
+                Equipment equip = (Equipment)myDataGrid.SelectedItem;
+                User userToAsign = (User)myDataGrid2.SelectedItem;
+
+                equip.UserId = userToAsign.Id;
+
+                _context.Equipments.Update(equip);
+                _context.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Выберете запись для изменения");
+                return;
+            }
+
+            var reloadWindow = new AdminMainWindow(_serviceProvider);
+            reloadWindow.Show();
+            this.Close();
+        }
+
+        private void Unasign_Click(object sender, RoutedEventArgs e)
+        {
+            if (myDataGrid.SelectedItem != null)
+            {
+                Equipment equip = (Equipment)myDataGrid.SelectedItem;
+
+                equip.UserId = null;
+
+                _context.Equipments.Update(equip);
+                _context.SaveChanges();
+            }
+            else
+            {
+                MessageBox.Show("Выберете запись для изменения");
+                return;
+            }
+
+            var reloadWindow = new AdminMainWindow(_serviceProvider);
+            reloadWindow.Show();
+            this.Close();
+        }
+
         private void ToAddPage_Click(object sender, RoutedEventArgs e)
         {
             var addWindow = new AddWindow(_serviceProvider);
@@ -45,10 +90,10 @@ namespace DemoReference.Views
 
         private void ToChangePage_Click(object sender, RoutedEventArgs e)
         {
-           if(myDataGrid.SelectedItem != null)
+            if (myDataGrid.SelectedItem != null)
             {
-                BuilderJobDuties builderJobDuties = (BuilderJobDuties)myDataGrid.SelectedItem;
-                var changeWindow = new ChangeWindow(_serviceProvider, builderJobDuties);
+                Equipment equip = (Equipment)myDataGrid.SelectedItem;
+                var changeWindow = new ChangeWindow(_serviceProvider, equip);
                 changeWindow.Show();
                 this.Close();
             }
@@ -61,14 +106,22 @@ namespace DemoReference.Views
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            BuilderJobDuties builderJobDuties = (BuilderJobDuties)myDataGrid.SelectedItem;
+            if (myDataGrid.SelectedItem != null)
+            {
+                Equipment equip = (Equipment)myDataGrid.SelectedItem;
 
-            _context.BuilderJobDuties.Remove(builderJobDuties);
-            _context.SaveChanges();
-            
-            var reloadWindow = new AdminMainWindow(_serviceProvider);
-            reloadWindow.Show();
-            this.Close();
+                _context.Equipments.Remove(equip);
+                _context.SaveChanges();
+
+                var reloadWindow = new AdminMainWindow(_serviceProvider);
+                reloadWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Выберете запись для изменения");
+                return;
+            }
         }
     }
 }

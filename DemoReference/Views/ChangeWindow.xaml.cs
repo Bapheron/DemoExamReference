@@ -1,4 +1,5 @@
 ﻿using DemoReference.Models;
+using DemoReference.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,70 +24,58 @@ namespace DemoReference.Views
     {
         private IServiceProvider _serviceProvider;
         private TestDBConext _context;
-        private BuilderJobDuties _builderJobDuties;
-        public ChangeWindow(IServiceProvider serviceProvider, BuilderJobDuties builderJobDuties)
+        private Equipment _equipment;
+        public ChangeWindow(IServiceProvider serviceProvider, Equipment equipment)
         {
             InitializeComponent();
 
             _serviceProvider = serviceProvider;
             _context = serviceProvider.GetRequiredService<TestDBConext>();
-            _builderJobDuties = builderJobDuties;
-
-            BuildersLoader();
-            DutiesLoader();
+            _equipment = equipment;
+            StatusLoader();
             StartingValuesLoader();
         }
 
-        public void StartingValuesLoader()
+        private void StatusLoader()
         {
-            cbBuilders.SelectedValue = _builderJobDuties.BuilderId;
-            cbDuties.SelectedValue = _builderJobDuties.JobDutiesId;
+            cbStatus.ItemsSource = EquipmentState.GetValues(typeof(EquipmentState));
         }
 
-        public void BuildersLoader()
+        private void StartingValuesLoader()
         {
-            var builders = _context.Builders.ToList(); // Используем _context вместо создания нового
-            cbBuilders.ItemsSource = builders;
-            cbBuilders.DisplayMemberPath = "SecondName";
-            cbBuilders.SelectedValuePath = "Id";
-        }
-
-        public void DutiesLoader()
-        {
-            var duties = _context.JobDuties.ToList(); // Используем _context вместо создания нового
-            cbDuties.ItemsSource = duties;
-            cbDuties.DisplayMemberPath = "Name";
-            cbDuties.SelectedValuePath = "Id";
+            tbNumber.Text = _equipment.InventoryNumber;
+            tbName.Text = _equipment.Name;
+            tbType.Text = _equipment.Type;
+            tbDescription.Text = _equipment.Description;
+            cbStatus.SelectedItem = _equipment.State;
         }
 
         private void Change_Click(object sender, RoutedEventArgs e)
         {
+            string num = tbNumber.Text;
+            string name = tbName.Text;
+            string type = tbType.Text;
+            string descrip = tbDescription.Text;
+            EquipmentState state = (EquipmentState)cbStatus.SelectedItem;
 
-            int builderId = (int)cbBuilders.SelectedValue;
-            int dutieId = (int)cbDuties.SelectedValue;
-
-            if (builderId <= 0 || dutieId <= 0)
+            if (string.IsNullOrWhiteSpace(num) || string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(type) || string.IsNullOrWhiteSpace(descrip) || state == null)
             {
                 MessageBox.Show("Заполните все поля");
                 return;
             }
             else
             {
+                var equip = _context.Equipments.Find(_equipment.Id);
 
-                var existingRecord = _context.BuilderJobDuties.Find(_builderJobDuties.Id);
+                equip.InventoryNumber = num;
+                equip.Name = name;
+                equip.Type = type;
+                equip.Description = descrip;
+                equip.State = state;
+                equip.UserId = null;
 
-                if (existingRecord == null)
-                {
-                    MessageBox.Show("Запись не найдена!");
-                    return;
-                }
-
-                existingRecord.BuilderId = builderId;
-                existingRecord.JobDutiesId = dutieId;
-
-                _context.BuilderJobDuties.Update(existingRecord);
+                _context.Equipments.Update(equip);
                 _context.SaveChanges();
- 
             }
 
             var mainWindow = new AdminMainWindow(_serviceProvider);

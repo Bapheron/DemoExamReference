@@ -8,15 +8,18 @@
         Title="AddWindow" Height="450" Width="800">
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
-            
-            <Label>First Name:</Label>
-            <TextBox x:Name="tbFName"/>
-            
-            <Label>Second Name</Label>
-            <TextBox x:Name="tbSName"/>
-            
-            <Label>Patronymic</Label>
-            <TextBox x:Name="tbPatronymic"/>
+
+            <Label>Inventory Number:</Label>
+            <TextBox x:Name="tbNumber"/>
+
+            <Label>Equipment Name</Label>
+            <TextBox x:Name="tbName"/>
+
+            <Label>Type</Label>
+            <TextBox x:Name="tbType"/>
+
+            <Label>Description</Label>
+            <TextBox x:Name="tbDescription"/>
 
             <Button Content="Add" Margin="0, 15" Click="Add_Click"/>
 

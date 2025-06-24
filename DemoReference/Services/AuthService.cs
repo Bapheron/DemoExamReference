@@ -19,12 +19,12 @@ namespace DemoReference.Services
 
         public bool UserLogin(string login, string password)
         {
-            return _context.Users.Any(u => u.Login == login && u.Password == password);
+            return _context.Users.Any(u => u.Login == login && u.Password == password && u.RoleId == 2);
         }
 
         public bool AdminLogin(string login, string password)
         {
-            return _context.Users.Any(u => u.Login == login && u.Password == password && u.Role == UserRole.administrator);
+            return _context.Users.Any(u => u.Login == login && u.Password == password && u.RoleId == 1);
 
         }
     }

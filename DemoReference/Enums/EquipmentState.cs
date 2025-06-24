@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace DemoReference.Enums
 {
-    public enum UserRole
+    public enum EquipmentState
     {
-       administrator = 1,
-       ordinary_user = 2,
+       inStock = 1,
+       issued,
+       onMaintenance
     }
 }

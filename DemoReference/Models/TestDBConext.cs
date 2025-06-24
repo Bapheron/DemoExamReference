@@ -9,18 +9,32 @@ namespace DemoReference.Models
 {
     public class TestDBConext : DbContext
     {
+        public DbSet<Role> Roles { get; set; }
         public DbSet<Models.User> Users { get; set; }
-        public DbSet<Models.JobDuties> JobDuties { get; set; }
-        public DbSet<Models.Builder> Builders { get; set; }
-        public DbSet<Models.BuilderJobDuties> BuilderJobDuties { get; set; }
+        public DbSet<Equipment> Equipments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=(localdb)\\Local;Initial Catalog=DemoDbRef;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            optionsBuilder.UseSqlServer("Data Source=(localdb)\\Local;Initial Catalog=DemoDbRef2;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Role>().HasData
+                (
+                     new Role
+                     {
+                         Id = 1,
+                         Name = "Administrator",
+                         AccessRights = "FullAccess"
+                     },
+                     new Role
+                     {
+                         Id = 2,
+                         Name = "User",
+                         AccessRights = "LimitedAccess"
+                     }
+                );
 
             modelBuilder.Entity<Models.User>().HasData
             (
@@ -29,42 +43,39 @@ namespace DemoReference.Models
                     Id = 1,
                     Login = "admin",
                     Password = "1",
-                    Role = Enums.UserRole.administrator
-                }
+                    RegistrationDate = DateOnly.FromDateTime(DateTime.Now),
+                    Surname = "Doe",
+                    Name = "John",
+                    Phone = "+9238",
+                    RoleId = 1
+                },
+                 new User
+                 {
+                     Id = 2,
+                     Login = "user1",
+                     Password = "1",
+                     RegistrationDate = DateOnly.FromDateTime(DateTime.Now),
+                     Surname = "Jhons",
+                     Name = "Jassy",
+                     Phone = "+27391",
+                     RoleId = 2
+                 }
             );
 
-            modelBuilder.Entity<Builder>().HasData
-            (
-                new Builder
-                {
-                    Id = 1,
-                    FirstName = "Jhon",
-                    SecondName = "Jhons",
-                    Patronymic = "Jhonson"
-                }
-            );
-
-            modelBuilder.Entity<JobDuties>().HasData
-            (
-                new JobDuties
-                {
-                    Id = 1,
-                    Name = "job 1",
-                    Description = "job 1 desc"
-                }
-            );
-
-            modelBuilder.Entity<BuilderJobDuties>().HasData
-            (
-                new BuilderJobDuties
-                {
-                    Id = 1,
-                    BuilderId = 1,
-                    JobDutiesId = 1,
-                    UserId = 1
-                }
-            );
-
+            modelBuilder.Entity<Equipment>().HasData
+                (
+                    new Equipment
+                    {
+                        Id = 1,
+                        InventoryNumber = "12131",
+                        Name = "Equip1",
+                        Type = "sports",
+                        Description = "Equip1 desc",
+                        PublicationDate = DateOnly.FromDateTime(DateTime.Now),
+                        State = Enums.EquipmentState.inStock,
+                        UserId = null
+                    }
+                );
         }
     }
 }

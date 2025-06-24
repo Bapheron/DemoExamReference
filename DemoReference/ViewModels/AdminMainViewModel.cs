@@ -13,12 +13,20 @@ namespace DemoReference.ViewModels
     {
         private readonly TestDBConext _context;
 
-        private ObservableCollection<BuilderJobDuties> _builderJobDutiesCollection;
+        private ObservableCollection<Equipment> _equipmentCollection;
+        private ObservableCollection<User> _userCollection;
 
-        public ObservableCollection<BuilderJobDuties> BuilderJobDutiesCollection
+
+        public ObservableCollection<Equipment> EquipmentCollection
         {
-            get => _builderJobDutiesCollection;
-            set => _builderJobDutiesCollection = value;
+            get => _equipmentCollection;
+            set => _equipmentCollection = value;
+
+        }
+        public ObservableCollection<User> UserCollection
+        {
+            get => _userCollection;
+            set => _userCollection = value;
 
         }
 
@@ -26,17 +34,25 @@ namespace DemoReference.ViewModels
         {
             _context = context;
             LoadEvents();
+            LoadUsers();
         }
 
         private void LoadEvents()
         {
-            var builderJDuties = _context.BuilderJobDuties
-                .Include(b => b.Builder)
-                .Include(b => b.JobDuties)
+            var equipments = _context.Equipments
                 .Include(b => b.User)
                 .ToList();
 
-            BuilderJobDutiesCollection = new ObservableCollection<BuilderJobDuties>(builderJDuties);
+            EquipmentCollection = new ObservableCollection<Equipment>(equipments);
+        }
+
+        private void LoadUsers()
+        {
+            var users = _context.Users
+                .Where(u => u.RoleId == 2)
+                .ToList();
+
+            UserCollection = new ObservableCollection<User>(users);
         }
     }
 }

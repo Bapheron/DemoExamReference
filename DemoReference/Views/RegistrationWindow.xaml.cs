@@ -33,11 +33,14 @@ namespace DemoReference.Views
 
         private void Confrim_Click(object sender, RoutedEventArgs e)
         {
-   
+
             string login = tbLogin.Text;
             string password = tbPass.Text;
+            string surname = tbSurname.Text;
+            string name = tbName.Text;
+            string phone = tbPhone.Text;
 
-            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(login) || string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(surname) || string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(phone))
             {
                 MessageBox.Show("Заполните все поля");
                 return;
@@ -48,7 +51,11 @@ namespace DemoReference.Views
 
                 user.Login = login;
                 user.Password = password;
-                user.Role = Enums.UserRole.ordinary_user;
+                user.RegistrationDate = DateOnly.FromDateTime(DateTime.Now);
+                user.Surname = surname;
+                user.Name = name;
+                user.Phone = phone;
+                user.RoleId = 2;
 
                 _context.Users.Add(user);
                 _context.SaveChanges();

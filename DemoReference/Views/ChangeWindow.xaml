@@ -9,14 +9,23 @@
     <Grid>
         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Width="250">
 
-            <Label>Builder</Label>
-            <ComboBox x:Name="cbBuilders"/>
+            <Label>Inventory Number:</Label>
+            <TextBox x:Name="tbNumber"/>
 
-            <Label>Job Duties</Label>
-            <ComboBox x:Name="cbDuties"/>
+            <Label>Equipment Name:</Label>
+            <TextBox x:Name="tbName"/>
+
+            <Label>Type:</Label>
+            <TextBox x:Name="tbType"/>
+
+            <Label>Description:</Label>
+            <TextBox x:Name="tbDescription"/>
+
+            <Label>Status:</Label>
+            <ComboBox x:Name="cbStatus"/>
 
             <Button Content="Change" Margin="0, 15" Click="Change_Click"/>
-            
+
         </StackPanel>
     </Grid>
 </Window>

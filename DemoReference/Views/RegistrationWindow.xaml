@@ -9,12 +9,24 @@
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
             Width="200">
+            
             <Label>Login:</Label>
             <TextBox x:Name="tbLogin"/>
+            
             <Label>Password:</Label>
             <TextBox x:Name="tbPass"/>
+            
+            <Label>Surname:</Label>
+            <TextBox x:Name="tbSurname"/>
+            
+            <Label>Name:</Label>
+            <TextBox x:Name="tbName"/>
+            
+            <Label>Phone:</Label>
+            <TextBox x:Name="tbPhone"/>
 
             <Button Content="Confrim" Margin="0, 15" Click="Confrim_Click"/>
+
         </StackPanel>
     </Grid>
 </Window>
